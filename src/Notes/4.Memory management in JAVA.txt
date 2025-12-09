@@ -1,0 +1,50 @@
+The Two Memory Areas : Memory management in JAVA
+================================================
+
+To manage memory efficiently, the JVM divides its memory into two main sections: the Stack and the Heap. While both are stored in your computer’s RAM, they serve entirely different purposes. The Stack is used for static memory allocation and the execution of threads, while the Heap is used for dynamic memory allocation where actual objects reside. Understanding the interaction between these two is key to understanding how Java manages data.
+
+
+
+Stack Memory (The Execution Scratchpad)
+--------------------------------------
+Stack Memory is a temporary, organized storage area that follows the LIFO (Last-In-First-Out) order. Whenever a method is called, a new block (called a "stack frame") is created here. This frame holds the method’s primitive local variables (like int x = 10) and reference variables (pointers to objects). Crucially, Stack memory is thread-specific. Each thread in your application has its own private stack that cannot be accessed by other threads. This makes the Stack thread-safe by default. Once a method finishes execution, its stack frame is immediately destroyed, automatically freeing up the memory. Accessing this memory is extremely fast because of this strict order.
+
+
+Heap Memory (The Storage Pool)
+------------------------------
+Heap Memory is a large, unstructured pool of memory used for storing Objects. Whenever you use the new keyword (e.g., new Student()), the actual object and its data are created inside the Heap. Unlike the Stack, the Heap is shared across the entire application. Any thread can access any object in the Heap if it has a reference to it. Because objects here can live for a long time and are accessed globally, memory management is complex. The Heap is not cleared automatically when a method ends; instead, it relies on the Garbage Collector (GC) to find and remove "orphan" objects that are no longer being used.
+
+
+How They Interact (The Reference Connection)
+--------------------------------------------
+The most common interview question is: "Where does an object reside?" The answer lies in the interaction between the two. Consider the line: Employee e = new Employee();.
+The actual object (new Employee data) is created in the Heap.
+The reference variable (e) is created in the Stack.
+The variable e in the Stack acts as a "remote control" or pointer that holds the memory address of the object sitting in the Heap.
+
+
+
+Size & Lifecycle: The Stack is small and short-lived (exists only while the method runs). The Heap is large and long-lived (exists as long as the application runs or until GC collects it).
+
+Performance: Stack access is much faster than Heap access.
+
+Exceptions:
+If you run out of Stack memory (usually due to infinite recursion), Java throws a java.lang.StackOverflowError.
+If you run out of Heap memory (due to creating too many large objects), Java throws a java.lang.OutOfMemoryError (OOM).
+
+
+
+What is Garbage Collection?
+===========================
+
+In older languages like C or C++, developers had to manually allocate and deallocate memory. If they forgot to free memory, it led to "memory leaks" and eventual system crashes. Garbage Collection (GC) is Java's automatic process of managing Heap memory. It runs in the background (as a daemon thread) to identify which objects are no longer needed by the program and deletes them to reclaim space. This allows developers to focus on business logic without worrying about manual memory management.
+
+
+How GC Identifies "Garbage" (Reachability Analysis) ?
+----------------------------------------------------
+The core logic the Garbage Collector uses to decide what to delete is called Reachability. It does not just delete objects randomly; it checks if an object is still "reachable" from the application's roots (like active Stack variables or static variables).
+
+
+Live Objects: Any object that is currently referenced by a running part of your code (e.g., a variable in the Stack pointing to an object in the Heap). The GC ignores these.
+
+Garbage (Unreachable) Objects: Any object in the Heap that no longer has a valid reference pointing to it. For example, if you set student = null, the original Student object in the Heap serves no purpose. The GC marks this for deletion.
