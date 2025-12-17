@@ -1,0 +1,102 @@
+What are Environment Variables?
+===============================================
+
+Environment Variables are dynamic, named values stored within the Operating System (Windows, Linux, macOS) that affect how running processes behave on a computer. Think of them as "global settings" or "configuration inputs" that exist outside your application code but are accessible to it. They allow you to decouple configuration from your code. Instead of hardcoding sensitive data (like database passwords) or system-specific paths (like where Java is installed) directly into your source files, you store them in the OS environment. When your application runs, it simply asks the OS, "What is the value for variable X?"
+
+
+Common Environment Variables for Java Developers
+---------------------------------------------------------------
+There are two critical variables every Java developer must configure to set up their development environment correctly:
+
+JAVA_HOME: This variable points to the root directory where the JDK is installed (e.g., C:\Program Files\Java\jdk-17). It serves as a standard reference point. Many external tools (like Maven, Gradle, or Tomcat) do not know where you installed Java. They rely on checking JAVA_HOME to locate the compiler and runtime files.
+
+PATH: This is a system-wide variable that lists directories where executable programs are located. When you type a command like javac or java in the terminal, the OS looks through every folder listed in the PATH variable to find that tool. If the bin folder of your JDK is not added to the PATH, the terminal will throw a "command not found" error because it doesn't know where to look for the Java tools.
+
+
+
+Primitive Data-Types
+==============================
+
+Primitive types are the most basic data forms in Java; they store simple values directly in the Stack memory (when local), which makes accessing them extremely fast compared to Objects. Java is not a "pure" object-oriented language specifically because it retains these primitives for performance reasons.
+
+Java defines 8 primitive data types, categorized by the kind of data they hold:
+
+Integer Types: Store whole numbers (byte, short, int, long). int is the default for math.
+Floating-Point Types: Store numbers with decimals (float, double). double is the default for decimals.
+Character Type: Stores a single Unicode character (char).
+Boolean Type: Stores a simple true/false flag (boolean).
+
+Note on Boolean Size: The Java specification does not define the exact size of a boolean. In an array, it is often treated as a byte, but mostly it is implementation-dependent.
+
+Char is an Integer: In Java, char is internally stored as an unsigned integer (the ASCII/Unicode value). This is why you can perform math on characters.
+Example: 'A' + 1 results in 66 (because 'A' is 65). This is often used in coding algorithm questions.
+
+
+
+Identifiers (The Names)
+------------------------------
+An identifier is simply the name you give to any component in your Java program—classes, methods, variables, or packages. It is how you identify a specific memory location or logic block. While you have freedom in naming, Java enforces strict syntax rules: identifiers can contain letters, digits, underscores (_), and dollar signs ($), but they cannot start with a digit. They are also case-sensitive, meaning myVariable and MyVariable are treated as two completely different identifiers. Additionally, you cannot use reserved Java keywords (like class, public, or void) as identifiers.
+
+Beyond the hard rules, the industry enforces "Naming Conventions" which are critical for professional development. If you violate these in an interview, you look inexperienced.
+
+Classes and Interfaces follow PascalCase (e.g., EmployeeDetails), where every word starts with a capital letter.
+Methods and Variables follow camelCase (e.g., calculateSalary), where the first word is lowercase and subsequent words are capitalized.
+Constants (static final) follow SCREAMING_SNAKE_CASE (e.g., MAX_RETRY_COUNT), using all uppercase letters separated by underscores.
+
+
+Literals (The Values)
+----------------------------
+A literal is the fixed, constant value that you assign directly to a variable in your source code. For example, in the statement int age = 25;, the number 25 is the literal. It represents the raw data itself. Java has specific literals for every primitive type: integer literals (100), floating-point literals (10.5), character literals enclosed in single quotes ('A'), boolean literals (true/false), and String literals enclosed in double quotes ("Hello"). The keyword null is also considered a literal, representing the absence of a value for reference types.
+
+
+
+The Distinction: Conversion vs. Casting
+=========================================
+
+In Java, data types define exactly how much memory a value occupies. Frequently, you need to move data from one type to another—for example, processing a user's age (entered as text) as a number, or treating a specific Dog object as a generic Animal. The term Type Conversion generally refers to the automatic change of data type done by the compiler when there is no risk of error. Type Casting, on the other hand, refers to the explicit (manual) instruction you give the compiler to force a value into a different type, often acknowledging that data might be lost or the operation might be unsafe
+
+
+Widening Conversion (Implicit)
+-------------------------------
+Widening, also known as implicit conversion, occurs when you assign a value of a smaller data type to a larger one (e.g., passing an int into a long variable). Because the destination type has a larger range and size than the source, there is no risk of losing data or overflowing the container. Therefore, Java performs this automatically without requiring any special syntax. The hierarchy of widening flows from small to large: 
+byte --> short --> int --> long --> float --> double
+
+Example:
+	int myInt = 100;
+	double myDouble = myInt; // Automatic conversion
+	// Result: myDouble becomes 100.0
+
+
+Narrowing Casting (Explicit)
+----------------------------
+Narrowing occurs when you attempt to assign a larger data type to a smaller one (e.g., squeezing a double into an int). This is inherently unsafe because the smaller container might not be big enough to hold the value, or it might be incapable of storing specific details (like decimal points). Java will throw a "compile-time error" if you try to do this directly. To proceed, you must use Explicit Casting, which involves placing the target type in parentheses (Type) before the value. By doing this, you are telling the compiler: "I accept the risk of data loss".
+
+When you cast a floating-point number to an integer, Java does not round the number; it truncates it. It simply chops off the decimal part.
+Example:
+	double myScore = 99.99;
+	int castedScore = (int) myScore; // Manual casting required
+	// Result: castedScore is 99 (The .99 is lost forever)
+
+
+Automatic Type Promotion in Expressions
+---------------------------------------
+A subtle but critical topic is "Type Promotion." When you perform arithmetic operations on smaller integer types (byte, short, or char), Java automatically promotes (converts) operands to int before the calculation happens. This ensures that the intermediate result does not overflow. However, this often confuses developers because the result of adding two bytes is an int, not a byte. To store the result back into a byte variable, you must explicitly cast it.
+Example of the Trap:Java
+	byte a = 10;
+	byte b = 20;
+	// byte c = a + b;  <-- COMPILE ERROR: Result is 'int', cannot sit in 'byte'
+	byte c = (byte) (a + b); // Correct: You must cast the result back to byte
+
+
+Object Reference Casting (Upcasting and Downcasting)
+----------------------------------------------------
+While primitive casting deals with value size, object casting deals with inheritance hierarchies.Upcasting is treating a child object as its parent type (e.g., Animal a = new Dog();). This is implicitly safe because a Dog is an Animal. It effectively restricts your access: you can only call methods defined in the Animal class, even though the underlying object is a Dog.Downcasting is the reverse: trying to treat a generic Parent reference as a specific Child type (e.g., Dog d = (Dog) a;). This is risky. If the Animal reference a was actually pointing to a Cat object in memory, trying to cast it to a Dog will cause a ClassCastException at runtime. To prevent this crash, experienced developers always perform a "safety check" using the instanceof operator before downcasting.
+Example:
+	Object obj = "Hello World"; // Upcasting (Implicit)
+	// String str = obj; // Compile Error: Compiler doesn't know 'obj' is a String
+	if (obj instanceof String) 
+	{
+    		String str = (String) obj; // Downcasting (Explicit and Safe)
+    		System.out.println(str.length());
+	}
+
