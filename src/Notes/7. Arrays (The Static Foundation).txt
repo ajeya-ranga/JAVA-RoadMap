@@ -1,0 +1,48 @@
+Arrays (The Static Foundation)
+==============================
+
+
+An Array is the most fundamental data structure in Java. It is a container object that holds a fixed number of values of a single type. The defining characteristic of an array is that its size is immutable; once you declare an array of size 5, it can never grow to size 6. If you need more space, you must manually create a new, larger array and copy all the elements over. In memory, arrays are stored in a contiguous block, which makes them extremely efficient for accessing data. If you know the index (e.g., arr[4]), the computer can jump directly to that memory address in O(1) time.
+
+Declaration Syntax:
+		// Option 1: Declaration with size (default values are 0 or null)
+		int[] numbers = new int[5]; 
+
+		Declaration with initialization (Values are set immediately)
+		String[] names = {"Alice", "Bob", "Charlie"};
+
+
+ArrayList (The Dynamic Wrapper)
+-------------------------------
+
+The ArrayList is part of the Java Collection Framework (java.util package). It is essentially a smart wrapper around a standard array. Its primary advantage is that it is dynamic: it handles resizing automatically. You don't need to know the number of elements in advance. You simply keep adding elements, and the ArrayList manages the underlying storage. However, because it is a complex object, it is slightly slower than a raw array and consumes more memory.
+
+Declaration Syntax:
+		// Note: We typically use the 'List' interface on the left for flexibility
+		List<String> dynamicNames = new ArrayList<>();
+		dynamicNames.add("Alice");
+		dynamicNames.add("Bob");
+
+
+The "Resizing" Theory
+------------------------------------------
+Since arrays are fixed, how does an ArrayList actually grow? This is a common theoretical question. When you create new ArrayList(), Java internally creates a small standard array (default capacity is usually 10). When you try to add the 11th element:
+
+--The ArrayList detects it is full.
+--It calculates a new capacity (usually current size + 50%).
+--It creates a brand new array with this larger size.
+--It copies all old elements into this new array.
+--It discards the old array. Theoretical takeaway: Resizing is an expensive operation (O(n)). If you know you will have 1,000 items, it is much better to define the initial capacity: new 	ArrayList<>(1000) to prevent multiple resizing events.
+
+
+
+Primitives vs. Wrapper Classes (Autoboxing)
+-------------------------------------------
+
+A critical limitation of the ArrayList is that it cannot hold primitive data types (int, char, double). It can only store Objects. To solve this, Java provides Wrapper Classes (Integer, Character, Double).
+
+Array: Can hold int (efficient) OR Integer (less efficient).
+
+ArrayList: Can only hold Integer.
+
+Autoboxing: When you type list.add(5), Java automatically converts the primitive 5 into an Integer object. This convenience comes with a slight performance cost.

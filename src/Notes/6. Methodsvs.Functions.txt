@@ -1,0 +1,59 @@
+Methods vs. Functions (The Java Context)
+=========================================
+
+
+While the terms are often used interchangeably in general programming, there is a technical distinction. A Function is a standalone block of code that performs a specific task. A Method is a function that is associated with an Object or Class. Because Java is a purely Object-Oriented language, there are no "free-floating" functions; everything must be defined inside a class. Therefore, in Java, we refer to them exclusively as Methods. They are the building blocks of behavior, allowing you to modularize logic and reuse code.
+
+
+
+How Data Moves: Pass-by-Value vs. Pass-by-Reference
+---------------------------------------------------
+
+This is perhaps the most misunderstood concept in Java interviews. The connection here is fundamental: this defines how your method receives data from the caller.
+The GOLDEN RULE : Java is strictly Pass-by-Value. It never supports Pass-by-Reference.
+
+For Primitives: When you pass a primitive (like int x = 10) to a method, Java creates a copy of the value 10 inside the method. If the method changes the value to 20, it changes only the copy. The original variable x outside the method remains 10.
+
+For Objects: When you pass an object (like Student s), you are technically passing the value of the reference (the memory address). You are giving the method a copy of the remote control to the object.
+
+The Consequence: Because the method holds a copy of the key to the same house (Heap object), if the method changes the object's internal data (e.g., s.setName("John")), the original object is modified.
+
+THE TRAP: However, if the method tries to point the reference to a completely new object (e.g., s = new Student()), the original reference outside the method remains unchanged.
+
+
+Variable Lifecycle: Scoping and Shadowing
+-----------------------------------------
+
+These concepts are tightly connected as they dictate where a variable is visible and what happens when names collide.
+Scoping and Block Scoping: Scope refers to the region of code where a variable is accessible. Java uses Block Scoping, meaning a variable is only alive inside the curly braces { ... } where it was declared.
+
+Class Level: Fields declared in the class are visible to all methods in that class.
+
+Method Level: Variables declared inside a method are local to that method.
+
+Block Level: Variables declared inside an if statement or for loop are visible only inside that specific block. Once the closing brace } is reached, the variable is destroyed.
+
+
+Shadowing: Shadowing occurs when a variable in an inner scope has the same name as a variable in an outer scope. The inner variable "shadows" (hides) the outer one.
+Scenario: You have a class field named salary. Inside a method, you declare a new local variable also named salary. When you type salary inside that method, Java uses the local version, effectively ignoring the class field. To access the hidden class field, you must explicitly use the this keyword (e.g., this.salary).
+
+
+Method Flexibility: Overloading and Varargs
+-------------------------------------------
+
+These two concepts are related because they both provide flexibility in how arguments are accepted.
+
+Method Overloading: Overloading allows a class to have multiple methods with the same name but different parameter lists (signatures). This is known as "Compile-Time Polymorphism."
+
+The Rules: You must change the number of arguments OR the type of arguments. Changing only the return type is not sufficient to overload a method.
+
+Purpose: It improves readability. Instead of creating methods like printString(), printInt(), and printBoolean(), you simply create print() for all of them, and Java picks the correct one automatically.
+
+
+Variable Length Arguments (Varargs): Introduced in Java 5, Varargs allow a method to accept zero or multiple arguments of the same type.
+
+Syntax: You use three dots (...) after the data type: public void sum(int... numbers).
+
+Internal Mechanism: Java treats the parameter numbers as an Array internally. You can loop through it just like an array.
+
+The Rule: A method can have only one varargs parameter, and it must be the last parameter in the list (e.g., void doTask(String name, int... values) is valid; void doTask(int... values, String name) is invalid).
