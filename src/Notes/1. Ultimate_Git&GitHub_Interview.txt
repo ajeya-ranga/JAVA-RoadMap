@@ -276,3 +276,7 @@ Undo the last commit but keep changes in the staging area.
 
 git reset --hard HEAD~1
 Undo the last commit and destroy all changes (Dangerous).
+
+
+git commit --amend --no-edit
+learn.....
