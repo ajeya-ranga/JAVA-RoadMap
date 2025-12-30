@@ -1,0 +1,44 @@
+Binary Search (Divide and Conquer)
+===================================
+Binary Search is a highly efficient algorithm used to find an element in a sorted collection. Unlike Linear Search, which eliminates one element at a time, Binary Search eliminates half of the remaining elements in every single step. It works on the principle of "Divide and Conquer." By comparing the target value to the middle element of the array, the algorithm can instantly determine which half of the array holds the target and safely ignore the other half. This logarithmic reduction makes it incredibly fast, even for massive datasets.
+
+
+
+How It Works (The Algorithm)
+----------------------------
+The algorithm maintains two pointers, usually called low (start of the range) and high (end of the range).
+Find Middle: Calculate the middle index of the current range.
+Compare: Check if the element at the mid index is equal to the Target.
+	If Equal: You found it! Return the index.
+	If Target < Mid: The answer must be in the left half. Move the high pointer to mid - 1.
+	If Target > Mid: The answer must be in the right half. Move the low pointer to mid + 1.
+	Repeat: Continue this process as long as low <= high.
+Conclude: If the loop finishes and low becomes greater than high, the element is not in the array.
+
+
+Complexity Analysis
+-------------------
+
+Time Complexity: O(log n).This is significantly faster than O(n). For an array of 1,000,000 elements, Linear Search takes up to 1 million steps; Binary Search takes at most 20 steps ($2^{20} \approx 1,000,000$).
+Space Complexity: O(1).The iterative approach (using a while loop) is "in-place" and requires no extra memory. (Note: The recursive version uses O(log n) stack space).
+
+
+
+When to Use It (The Pattern)
+----------------------------
+You should immediately think of Binary Search in two scenarios:
+Sorted Arrays: If the input is already sorted (e.g., "Given a sorted array of integers..."), this is the default approach.
+Monotonic Search Space: Even if there is no explicit array, if the answer lies within a range (e.g., "Find the square root of X" or "Find the minimum capacity to ship packages"), and the condition is monotonic (FFFFTTTT), you can binary search on the answer itself.
+
+
+
+Critical Problem-Solving Tips (The Traps)
+-----------------------------------------
+
+The Overflow Bug: 
+This is a famous interview test. Calculating the middle index using int mid = (low + high) / 2; is risky. If low and high are both very large integers (near Integer.MAX_VALUE), their sum will overflow and become negative, crashing the program.
+The Fix: Always calculate mid as int mid = low + (high - low) / 2;.
+
+The Infinite Loop: This usually happens due to "Off-by-One" errors. When moving pointers, never set low = mid or high = mid. You must always use mid + 1 or mid - 1 to ensure the range actually shrinks.
+
+Sorted Data: Binary Search fails on unsorted data. If the data is not sorted, you must sort it first or use Linear Search.

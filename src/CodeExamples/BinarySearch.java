@@ -15,15 +15,15 @@ public class BinarySearch
         System.out.println("Your element " + target + " was found in the " + index + "th index of the array.");
     }
 
-    static int binarySearch(int[] input, int value){
+    static int binarySearch(int[] input, int target){
         int start = 0;
-        int end = input.length-1;
-        while(start <= end){
+        int end = input.length;
+        while(start < end){
             int mid = start + (end-start)/2;
-            if(input[mid] > value){
+            if(input[mid] > target){
                 end = mid -1;
             }
-            else if(input[mid] < value){
+            else if(input[mid] < target){
                 start = mid+1;
             }
             else{

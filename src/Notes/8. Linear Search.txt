@@ -1,0 +1,35 @@
+Linear Search (Brute Force Approach)
+====================================
+
+Linear Search (also known as Sequential Search) is the simplest searching algorithm available. Its logic mirrors how a human looks for an item in a disorganized pile: it picks up one item at a time, checks if it is the target, and if not, moves to the next one. It starts at the very beginning of the data structure (index 0) and traverses essentially every single element until it either finds the match or runs out of elements. Because it does not jump or skip any data, it is exhaustive.
+
+
+
+The Algorithm Steps
+--------------------
+The process is straightforward and does not require the data to be in any specific order (unlike Binary Search):
+
+Start at the first element (Index 0).
+Compare the current element with the Target Value.
+If they match, return the current Index (Search Successful).
+If they do not match, move to the next element (Index +1).
+Repeat until the end of the list is reached.
+If the end is reached without a match, return a signal value (typically -1 or null) to indicate the element is not present.
+
+
+
+Complexity Analysis (Interview Critical)
+----------------------------------------
+Time Complexity (Worst Case): O(n). If the element is at the very end of the array (or not present at all), you have to check all n elements. If the array doubles in size, the time taken doubles.
+Time Complexity (Best Case): O(1). If the target element happens to be at the very first index (Index 0).
+
+Space Complexity: O(1). It is an "in-place" algorithm. It does not require any extra memory or data structures (like a Hash Map or a recursive stack) to run; it only needs a single variable for the iterator.
+
+
+
+When to Use It?
+---------------
+Despite being "inefficient" (O(n)) compared to Binary Search (O(\log n)), Linear Search is still useful in specific scenarios:
+Unsorted Data: This is its main advantage. If you receive a random list of numbers and cannot afford the time cost to sort them first (O(n \log n)), Linear Search is your only option.
+Small Datasets: For very small lists (e.g., < 100 items), the difference in speed is negligible, and Linear Search is easier to implement.
+Linked Lists: Because Linked Lists do not support "Random Access" (you can't jump to the middle instantly), you are forced to traverse them linearly anyway.
