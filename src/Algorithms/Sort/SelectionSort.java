@@ -13,27 +13,32 @@ public class SelectionSort {
         System.out.println("Sorted array using selection-sort : " + Arrays.toString(sorted));
     }
 
-    public static int[] selectionSort(int[] array){
+    private static int[] selectionSort(int[] array) {
 
         for(int i = 0; i < array.length; i++){
 
-            int lastIndex = array.length - 1 - i;
-            int maxIndex = getMax(array, i, lastIndex);
+            int minValue = array[i];
+            int minValueIndex = i;
 
-            //swap(array, )
-        }
-        return null;
-    }
+            for(int j = i+1; j < array.length; j++){
 
-    public static int getMax(int[] array, int start, int end){
-
-        int max = 0;
-        for(int i = start; i < end; i++){
-
-            if(array[i] > max){
-                max = array[i];
+                if(array[j] < minValue){
+                    minValue = array[j];
+                    minValueIndex = j;
+                }
             }
+
+            swapMembers(array, minValueIndex, i);
         }
-        return max;
+        return array;
     }
+
+    public static void swapMembers(int[] array,int a,int b){
+
+        int temp = array[a];
+        array[a] = array[b];
+        array[b] = temp;
+    }
+
+
 }
