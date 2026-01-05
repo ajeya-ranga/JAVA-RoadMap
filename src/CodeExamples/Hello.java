@@ -10,6 +10,7 @@ public class Hello
         String name = sc.next();
         System.out.print("CodeExamples.Hello " + name + " !!!!!!!");
         System.out.println("Welcome to the world of programming......");
+
     }
 
 }

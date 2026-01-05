@@ -1,0 +1,45 @@
+Bubble Sort (Why "Bubble"?)
+==============================
+Bubble Sort is the simplest sorting algorithm based on comparison. It gets its name from the way elements move: with each complete iteration, the largest remaining element "bubbles up" to its correct position at the end of the array, just like an air bubble rising to the surface of the water.
+
+
+
+How It Works (The Logic)
+------------------------
+The algorithm works by repeatedly swapping adjacent elements if they are in the wrong order.
+Pairwise Comparison: 
+	It starts at the beginning (index 0) and compares the current element with the next element.
+Swap Decision:
+	If arr[j] > arr[j+1]: They are in the wrong order. Swap them.
+	If arr[j] < arr[j+1]: They are correct. Do nothing.
+
+The Ripple Effect: 
+As the loop moves forward, the largest number gets swapped repeatedly until it reaches the far right end.
+
+
+The Iterations:
+This is the most important part to understand regarding loop limits.
+Pass 1: The largest element is guaranteed to move to the last index (Position N-1).
+Pass 2: The second largest element is guaranteed to move to the second-to-last index (Position N-2).
+
+Optimization: Because the end of the array gets sorted one by one, the inner loop does not need to check the end again.
+Inner loop limit: length - 1 - i (where i is the current pass number).
+
+
+Complexity Analysis
+-------------------
+Time Complexity 
+
+(Worst & Average)->O(N^2) : Since we have nested loops (one for passes, one for comparisons), the time taken grows quadratically. If you double the elements, the work quadruples.
+(Best Case)->O(N) : Only achievable with the "Swapped Flag" optimization. If the array is already sorted, it makes one pass, sees no swaps, and stops.
+
+
+Space Complexity->O(1) : It is an In-Place sorting algorithm. It doesn't need a new array; it just shuffles the existing one.
+
+
+When to use it?
+---------------
+Honestly? Almost never in production. It is too slow for large datasets. It is primarily used for:
+Teaching: To introduce the concept of sorting.
+Tiny Datasets: If you are sorting 5 or 10 items, the overhead is negligible.
+Detecting Sortedness: With the optimization, it's a quick way to check if a list is already sorted.
