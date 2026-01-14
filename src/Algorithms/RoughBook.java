@@ -6,10 +6,24 @@ public class RoughBook
     public static void main(String[] args)
     {
 
-        An obj = new Bo();
-        obj.printAn();
+        Trial thread = new Trial();
+        thread.start();
+
 
     }
+
+
+    static class Trial extends Thread
+    {
+        @Override
+        public void run()
+        {
+            System.out.println("Hi i am runnig !");
+            try{ Trial.sleep(1000); }
+            catch(Exception ex) {}
+        }
+    }
+
 
 
     static class An {
@@ -31,6 +45,26 @@ public class RoughBook
             System.out.println("Printing in class Bo");
         }
     }
+
+
+
+
+    abstract class Banyan
+    {
+        int number;
+        String name;
+        abstract void showClass();
+    }
+
+    class Tree extends Banyan
+    {
+
+        @Override
+        void showClass() {
+
+        }
+    }
+
 
 
 
@@ -62,5 +96,19 @@ public class RoughBook
 
 
 
+class Sports
+{
+    private static Sports instance;
 
+    public static Sports getInstance()
+    {
+        if(instance == null)
+        {
+            return instance = new Sports();
+        }
+        else {
+            return instance;
+        }
+    }
+}
 
